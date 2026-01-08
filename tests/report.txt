@@ -1,0 +1,47 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.2, pluggy-1.6.0 -- /home/stephan/Git/zufall/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/stephan/Git/zufall
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-7.0.0
+collecting ... collected 25 items
+
+tests/test_experiments.py::TestExperimentRunner::test_runner_initialization PASSED [  4%]
+tests/test_experiments.py::TestExperimentRunner::test_run_single_experiment PASSED [  8%]
+tests/test_experiments.py::TestExperimentRunner::test_run_variable_analysis PASSED [ 12%]
+tests/test_experiments.py::TestExperimentRunner::test_approximation_ratio_to_theoretical PASSED [ 16%]
+tests/test_experiments.py::TestExperimentResult::test_result_creation PASSED [ 20%]
+tests/test_three_sat.py::TestLiteral::test_literal_creation PASSED       [ 24%]
+tests/test_three_sat.py::TestLiteral::test_literal_repr PASSED           [ 28%]
+tests/test_three_sat.py::TestClause::test_clause_creation PASSED         [ 32%]
+tests/test_three_sat.py::TestClause::test_clause_invalid_size PASSED     [ 36%]
+tests/test_three_sat.py::TestThreeCNFFormula::test_formula_creation PASSED [ 40%]
+tests/test_three_sat.py::TestThreeCNFFormula::test_generate_random_formula PASSED [ 44%]
+tests/test_three_sat.py::TestThreeCNFFormula::test_random_formula_reproducibility PASSED [ 48%]
+tests/test_three_sat.py::TestAssignment::test_assignment_creation PASSED [ 52%]
+tests/test_three_sat.py::TestAssignment::test_evaluate_literal_positive PASSED [ 56%]
+tests/test_three_sat.py::TestAssignment::test_evaluate_literal_negated PASSED [ 60%]
+tests/test_three_sat.py::TestAssignment::test_evaluate_clause_satisfied PASSED [ 64%]
+tests/test_three_sat.py::TestAssignment::test_count_satisfied_clauses PASSED [ 68%]
+tests/test_three_sat.py::TestRandomizedThreeSAT::test_algorithm_initialization PASSED [ 72%]
+tests/test_three_sat.py::TestRandomizedThreeSAT::test_solve_returns_valid_assignment PASSED [ 76%]
+tests/test_three_sat.py::TestRandomizedThreeSAT::test_solve_reproducibility PASSED [ 80%]
+tests/test_three_sat.py::TestRandomizedThreeSAT::test_theoretical_expected_satisfied PASSED [ 84%]
+tests/test_three_sat.py::TestRandomizedThreeSAT::test_approximation_ratio PASSED [ 88%]
+tests/test_three_sat.py::TestBruteForce::test_brute_force_small_instance PASSED [ 92%]
+tests/test_three_sat.py::TestBruteForce::test_brute_force_rejects_large_instance PASSED [ 96%]
+tests/test_three_sat.py::TestBruteForce::test_brute_force_vs_random_algo PASSED [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.3-final-0 ________________
+
+Name                 Stmts   Miss  Cover   Missing
+--------------------------------------------------
+src/__init__.py          0      0   100%
+src/experiments.py      68     19    72%   62-63, 93-99, 104-124
+src/three_sat.py        70      3    96%   33, 63, 88
+--------------------------------------------------
+TOTAL                  138     22    84%
+Coverage HTML written to dir doc/htmlcov
+============================= 25 passed in 15.62s ==============================
