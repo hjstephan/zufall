@@ -41,6 +41,54 @@ Ein \textit{Versuch} beschreibt das Vorhaben zum Beispiel einen Würfel zu würf
 
 Für Versuche, die durch diskrete Ereignisse beschrieben werden, ist die Überprüfung der vollständigen mathematischen Beschreibung notwendig. Erst dann liegt eine mathematische Beschreibung vor, auf deren Grundlage weitere Ereignisse für diesen Versuch betrachtet und analysiert werden können. Für den Versuch einen Würfel einmal zu würfeln kann man sich auch fragen, wie wahrscheinlich der Zufall für das Ereignis ist, dass der Würfel nicht auf den Augenzahl $3$ fällt. Das ist komplizierter, im Allgemeinen. Glücklicherweise aber betrachten wir diskrete Ereignisse. Deshalb lässt sich die Wahrscheinlichkeit für den Zufall des Ereignisses, dass der Würfel nicht auf die Augenzahl $3$ fällt, wie folgt \textit{abzählen}. Die Wahrscheinlichkeit für den Zufall des Ereignisses, dass der Würfel nicht auf die Augenzahl $3$ fällt, ist dieselbe für den Zufall der Ereignisse, dass der Würfel auf die Augenzahl $1, 2, 4, 5$ oder $6$ fällt. Dies sind fünf Ereignisse. Damit ergibt sich eine Wahrscheinlichkeit für den Zufall des Ereignisses, dass der Würfel nicht auf die Augenzahl $3$ fällt, von $\frac{5}{6}$.
 
+
+\subsection{Zufallsvariable}
+
+
+\subsection{Erwartungswert}
+
+\section{3-SAT}
+
+Gegeben sei eine 3-KNF Formel $\psi$ mit $m$ Klauseln $C_1, \dots, C_m$ und $n$ Variablen $x_1, \dots, x_n$. Die Variablen $x_i$ können nur einen Wert aus $\{0, 1\}$ annehmen. Jede Klausel $C_j$ enthält genau 3 Literale. Ein einfacher Algorithmus, der Zufall gebraucht, ermöglicht es, eine Approximationsgüte von $7/8$ zu erreichen. Das heißt, dass im Erwartungswert mindestens $87.5\%$ aller erfüllbaren Klauseln von $\psi$ erfüllt werden. Warum werden mit diesem Algorithmus $87.5\%$ aller erfüllbaren Klauseln erfüllt und warum ist das gut? Um $100.0\%$ aller erfüllbaren Klauseln von $\psi$ zu erfüllen, ist eine exponentielle Laufzeit in der Anzahl $n$ der Variablen nötig, die alle Zuweisungen von $\{0, 1\}$ zu den Variablen $x_i$ prüft. Daher verwendet man in der Praxis auch gute Lösungen, die nicht optimal sind, aber dafür effizient berechnet werden können.
+
+Die Arbeitsweise des Algorithmus mit Zufall für 3-KNF ist:
+\begin{enumerate}
+	\item Für jede Variable $x_i$:
+	\begin{itemize}
+		\item[-] Setze $x_i = 1$ (Wahr) mit Wahrscheinlichkeit $\frac{1}{2}$, d.h., $P(x_i=1) = \frac{1}{2}$
+		\item[-] Setze $x_i = 0$ (Falsch) mit Wahrscheinlichkeit $\frac{1}{2}$, d.h., $P(x_i=0) = \frac{1}{2}$
+	\end{itemize}
+	\item Die Zuweisungen der Werte $\{0, 1\}$ zu den Variablen $x_i$ erfolgen unabhängig voneinander.
+\end{enumerate}
+\textbf{Wahrscheinlichkeit für eine Klausel}: Eine Klausel $C_j = (l_1 \lor l_2 \lor l_3)$ ist nur dann nicht erfüllbar bzw. Falsch, wenn alle drei Literale in ihrer Interpretation jeweils den Wert Falsch haben. Da den Variablen unabhängig voneinander und mit Wahrscheinlichkeit $1/2$ ein Wert aus $\{0, 1\}$ zugewiesen wird, gilt:
+\begin{equation}
+	P(C_j \text{ ist Falsch}) = \left(\frac{1}{2}\right)^3 = \frac{1}{8}
+\end{equation}
+Die Wahrscheinlichkeit, dass die Klausel $C_j$ erfüllt ist, beträgt somit:
+\begin{equation}
+	P(C_j \text{ ist Wahr}) = 1 - P(C_j \text{ ist falsch}) = 1 - \frac{1}{8} = \frac{7}{8}
+\end{equation}
+\textbf{Erwartungswert der erfüllten Klauseln}: Wir definieren Indikatorvariablen $Y_j$ für $j = 1, \dots, m$:
+\begin{equation}
+	Y_j = 
+	\begin{cases} 
+		1, & \text{falls } C_j \text{ erfüllt ist} \\
+		0, & \text{sonst}
+	\end{cases}
+\end{equation} 
+Die Gesamtzahl der erfüllten Klauseln ist die Zufallsvariable $Y = \sum_{j=1}^{m} Y_j$. Aufgrund der Linearität des Erwartungswerts gilt:
+\begin{align}
+	E[Y] &= E\left[\sum_{j=1}^{m} Y_j\right] \\
+	&= \sum_{j=1}^{m} E[Y_j] \\
+	&= \sum_{j=1}^{m} P(Y_j = 1) \\
+	&= \sum_{j=1}^{m} \frac{7}{8}.
+\end{align}
+Die erwartete Gesamtzahl aller erfüllten Klauseln beträgt damit also $\frac{7}{8}m$. Sei $O$ die optimale Anzahl an Klauseln, die in $\psi$ erfüllt werden können. Dann kann $O$ höchstens alle $m$ Klauseln erfüllen, also $O \le m$. Damit ergibt sich
+\begin{equation}
+	E[Y] = \frac{7}{8}m \ge \frac{7}{8} O.
+\end{equation}
+Das bedeutet, die Lösung des Algorithmus mit Zufall für 3-KNF erfüllt im Erwartungswert mindestens $\frac{7}{8}$ aller Klauseln der optimalen Anzahl an Klauseln, die überhaupt in $\psi$ erfüllt werden können. Die Laufzeit dieses Algorithmus mit Zufall für 3-KNF ist linear in der Anzahl der Klauseln und Variablen.
+
 \section{Zusammenfassung}
 \subsection{Ausblick}
 	
