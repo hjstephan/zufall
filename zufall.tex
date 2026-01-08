@@ -5,6 +5,8 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+
 \geometry{margin=2.5cm}
 
 \theoremstyle{definition}
@@ -33,7 +35,11 @@ Um jede Unruhe über den Ausgang des Zufalls allen Beteiligten zu nehmen, wird d
 
 \subsection{Definition}
 
-Für das diskrete Ereignis, bei dem ein Würfel einmal geworfen wird, können folgende diskrete Ereignisse zufällig eintreten. Der Würfel kann auf die Augenzahl $1$ fallen, der Würfel kann auf die Augenzahl $2$ fallen, ..., der Würfel kann auf die Augenzahl $6$ fallen. Dabei ist jeder Fall des Würfels auf eine andere Augenzahl ein Ereignis. Es gibt damit also sechs Ereignisse beim Würfeln des Würfels mit sechs Seiten.
+Für das diskrete Ereignis, bei dem ein Würfel einmal geworfen wird, können folgende diskrete Ereignisse zufällig eintreten. Der Würfel kann auf die Augenzahl $1$ fallen, der Würfel kann auf die Augenzahl $2$ fallen, ..., der Würfel kann auf die Augenzahl $6$ fallen. Dabei ist jeder Fall des Würfels auf eine andere Augenzahl ein Ereignis. Es gibt damit also sechs Ereignisse beim Würfeln des Würfels mit sechs Seiten.  
+
+Ein \textit{Versuch} beschreibt das Vorhaben zum Beispiel einen Würfel zu würfeln. In diesem Versuch können unterschiedliche Ereignisse zufällig eintreten. \textit{Die Menge aller Ereignisse für einen Versuch}, die zufällig eintreten können, wird definiert mit $\Omega$. Um nun zu sagen, wie zufällig es ist, dass der Würfel beim Wurf auf die Augenzahl $3$ fällt, muss nur dieses Ereignis ins Verhältnis zu allen möglichen Ereignissen gesetzt werden. Damit ergibt sich als Wert für den Zufall des Ereignisses, dass der Würfel beim Wurf auf die Augenzahl $3$ fällt, die \textit{Wahrscheinlichkeit} von $\frac{1}{6}$. Es fällt auf, dass für jedes Ereignis dieses Versuches gilt, dass der Würfel beim Wurf auf die Augenzahl $k$ fällt, die \textit{Wahrscheinlichkeit} $\frac{1}{6}$ hat, $k \in \Omega = \{1, \ldots, 6\}$. Denn der Würfel hat ja sechs gleich große Seiten und keine der Seiten des Würfels ist durch die Art des Würfels bevorzugt. Ist die Summe aller Wahrscheinlichkeiten der Zufälle aller Ereignisse insgesamt $1$, wurden alle Ereignisse des Versuchs berücksichtigt und der Versuch ist \textit{mathematisch vollständig beschrieben}.
+
+Für Versuche, die durch diskrete Ereignisse beschrieben werden, ist die Überprüfung der vollständigen mathematischen Beschreibung notwendig. Erst dann liegt eine mathematische Beschreibung vor, auf deren Grundlage weitere Ereignisse für diesen Versuch betrachtet und analysiert werden können. Für den Versuch einen Würfel einmal zu würfeln kann man sich auch fragen, wie wahrscheinlich der Zufall für das Ereignis ist, dass der Würfel nicht auf den Augenzahl $3$ fällt. Das ist komplizierter, im Allgemeinen. Glücklicherweise aber betrachten wir diskrete Ereignisse. Deshalb lässt sich die Wahrscheinlichkeit für den Zufall des Ereignisses, dass der Würfel nicht auf die Augenzahl $3$ fällt, wie folgt \textit{abzählen}. Die Wahrscheinlichkeit für den Zufall des Ereignisses, dass der Würfel nicht auf die Augenzahl $3$ fällt, ist dieselbe für den Zufall der Ereignisse, dass der Würfel auf die Augenzahl $1, 2, 4, 5$ oder $6$ fällt. Dies sind fünf Ereignisse. Damit ergibt sich eine Wahrscheinlichkeit für den Zufall des Ereignisses, dass der Würfel nicht auf die Augenzahl $3$ fällt, von $\frac{5}{6}$.
 
 \section{Zusammenfassung}
 \subsection{Ausblick}
