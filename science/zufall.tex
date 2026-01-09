@@ -130,6 +130,96 @@ Die bekannten Wahrscheinlichkeitsverteilungen der Mathematik sind für die unter
 
 Im Folgenden werden die unterschiedlichen Wahrscheinlichkeitsverteilungen aufgeführt. Dabei sollen Gemeinsamkeiten auffallen und dahin führen, dass sie diese Verteilungen mit Genauigkeit und Vorsicht anzuwenden sind.
 
+\subsection{Bernoulli-Verteilung}
+
+Die Bernoulli-Verteilung beschreibt Versuche, bei denen es nur zwei mögliche Ereignisse gibt. Ein Ereignis wird als Erfolg bezeichnet und das andere als Misserfolg. Zum Beispiel kann beim Wurf einer Münze das Ereignis Kopf als Erfolg und das Ereignis Zahl als Misserfolg bezeichnet werden. Ebenso kann beim Würfeln eines Würfels das Ereignis, dass der Würfel auf die Augenzahl $6$ fällt, als Erfolg bezeichnet werden und alle anderen Ereignisse, dass der Würfel auf die Augenzahlen $1, 2, 3, 4$ oder $5$ fällt, als Misserfolg.
+
+Für einen Versuch, der durch die Bernoulli-Verteilung beschrieben wird, wird eine Zufallsvariable $X$ definiert durch
+\begin{align}
+	X = 
+	\begin{cases} 
+		1, & \text{falls Erfolg eintritt} \\
+		0, & \text{falls Misserfolg eintritt}
+	\end{cases}
+\end{align}
+Die Wahrscheinlichkeit für den Erfolg wird mit $p$ bezeichnet, also $P(X = 1) = p$. Die Wahrscheinlichkeit für den Misserfolg ist dann $P(X = 0) = 1 - p$. Es ist wichtig zu beachten, dass die Summe aller Wahrscheinlichkeiten $p + (1-p) = 1$ ergibt. Damit ist der Versuch mathematisch vollständig beschrieben.
+
+Der Erwartungswert einer bernoulli-verteilten Zufallsvariable $X$ berechnet sich wie folgt:
+\begin{align}
+	E[X] &= 1 \cdot P(X = 1) + 0 \cdot P(X = 0) \\
+	&= 1 \cdot p + 0 \cdot (1-p) \\
+	&= p.
+\end{align}
+Das bedeutet, bei einem Versuch, der durch die Bernoulli-Verteilung beschrieben wird, erwarten wir im Mittel den Wert $p$. Für den Münzwurf mit $p = \frac{1}{2}$ erwarten wir also den Wert $0{,}5$. Dieser Wert kann nicht eintreten, denn die Münze zeigt entweder Kopf oder Zahl. Der Erwartungswert beschreibt aber formal genau, was bei vielen Wiederholungen dieses Versuchs zu erwarten ist.
+
+\begin{beispiel}
+	Ein Basketballspieler trifft den Korb mit einer Wahrscheinlichkeit von $p = 0{,}7$. Bei einem einzelnen Wurf wird der Erfolg (Treffer) mit der Zufallsvariable $X$ beschrieben, die bernoulli-verteilt ist mit Parameter $p = 0{,}7$. Der erwartete Wert ist $E[X] = 0{,}7$.
+\end{beispiel}
+
+Die Bernoulli-Verteilung ist die einfachste aller Wahrscheinlichkeitsverteilungen. Sie ist die Grundlage für viele weitere Verteilungen. Wird ein Versuch, der durch die Bernoulli-Verteilung beschrieben wird, mehrfach unabhängig wiederholt, ergeben sich andere Wahrscheinlichkeitsverteilungen, die auf der Bernoulli-Verteilung aufbauen.
+
+\subsection{Geometrische Verteilung}
+
+Die geometrische Verteilung beschreibt Versuche, bei denen ein Bernoulli-Versuch so oft wiederholt wird, bis zum ersten Mal ein Erfolg eintritt. Es stellt sich die Frage: Wie viele Versuche sind nötig, bis der erste Erfolg eintritt? Beim Würfeln eines Würfels kann man fragen: Wie oft muss der Würfel geworfen werden, bis zum ersten Mal die Augenzahl $6$ fällt? Bei diesem Versuch wird der Würfel so lange geworfen, bis die Augenzahl $6$ das erste Mal erscheint.
+
+Für einen Versuch, der durch die geometrische Verteilung beschrieben wird, wird eine Zufallsvariable $X$ definiert durch
+\begin{align}
+	X = \{\text{Anzahl der Versuche bis zum ersten Erfolg}\}.
+\end{align}
+Die Wahrscheinlichkeit, dass der erste Erfolg genau beim $k$-ten Versuch eintritt, berechnet sich wie folgt. Es müssen zunächst $k-1$ Misserfolge eintreten, jeder mit Wahrscheinlichkeit $1-p$, und dann muss beim $k$-ten Versuch ein Erfolg mit Wahrscheinlichkeit $p$ eintreten. Damit ergibt sich:
+\begin{align}
+	P(X = k) = (1-p)^{k-1} \cdot p, \quad k = 1, 2, 3, \ldots
+\end{align}
+Es ist wichtig zu überprüfen, dass die Summe aller Wahrscheinlichkeiten $1$ ergibt. Dies ist tatsächlich der Fall, denn es gilt:
+\begin{align}
+	\sum_{k=1}^{\infty} P(X = k) = \sum_{k=1}^{\infty} (1-p)^{k-1} \cdot p = p \cdot \frac{1}{1-(1-p)} = p \cdot \frac{1}{p} = 1.
+\end{align}
+Damit ist der Versuch mathematisch vollständig beschrieben.
+
+Der Erwartungswert einer geometrisch verteilten Zufallsvariable $X$ beträgt:
+\begin{align}
+	E[X] = \frac{1}{p}.
+\end{align}
+Das bedeutet, im Erwartungswert benötigen wir $\frac{1}{p}$ Versuche bis zum ersten Erfolg. Für das Würfeln einer $6$ mit einem Würfel ist $p = \frac{1}{6}$. Damit erwarten wir $E[X] = \frac{1}{1/6} = 6$ Würfe bis zum ersten Mal die Augenzahl $6$ fällt. Dies ist ein intuitives Ergebnis. Wird der Versuch in der Praxis durchgeführt, kann es sein, dass die $6$ bereits beim ersten Wurf fällt. Es kann aber auch sein, dass die $6$ erst nach 20 Würfen das erste Mal fällt. Der Erwartungswert beschreibt das, was im Mittel über viele Wiederholungen dieses gesamten Versuchs zu erwarten ist.
+
+\begin{beispiel}
+	Ein Unternehmen ruft potenzielle Kunden an. Jeder Kunde kauft mit Wahrscheinlichkeit $p = 0{,}2$ das Produkt. Die Anzahl der Anrufe bis zum ersten Verkauf ist geometrisch verteilt mit Parameter $p = 0{,}2$. Im Erwartungswert sind $E[X] = \frac{1}{0{,}2} = 5$ Anrufe nötig bis zum ersten Verkauf.
+\end{beispiel}
+
+Die geometrische Verteilung zeigt, wie vorsichtig der Erwartungswert interpretiert werden muss. In der Praxis kann die tatsächliche Anzahl der benötigten Versuche erheblich vom Erwartungswert abweichen. Dies ist bei allen Wahrscheinlichkeitsverteilungen zu beachten.
+
+\subsection{Gaußsche Verteilung}
+
+Die Gaußsche Verteilung, auch Normalverteilung genannt, beschreibt kontinuierliche Ereignisse. Bis jetzt wurden nur diskrete Ereignisse betrachtet. Bei kontinuierlichen Ereignissen kann die Zufallsvariable jeden beliebigen Wert aus einem Intervall annehmen, zum Beispiel alle reellen Zahlen. Die Gaußsche Verteilung ist die wichtigste Verteilung für kontinuierliche Ereignisse in der Praxis.
+
+Ein Beispiel für einen Versuch mit kontinuierlichen Ereignissen ist die Messung der Körpergröße von Menschen. Die Körpergröße kann jeden Wert aus einem bestimmten Intervall annehmen, zum Beispiel zwischen $150$ cm und $210$ cm. Die Körpergröße ist damit keine diskrete Größe wie die Augenzahl beim Würfeln, sondern eine kontinuierliche Größe.
+
+Für einen Versuch, der durch die Gaußsche Verteilung beschrieben wird, wird eine Zufallsvariable $X$ definiert, die Werte aus den reellen Zahlen annehmen kann. Die Gaußsche Verteilung wird durch zwei Parameter beschrieben: den Erwartungswert $\mu$ und die Varianz $\sigma^2$. Der Erwartungswert $\mu$ gibt an, um welchen Wert herum die Zufallsvariable streut. Die Varianz $\sigma^2$ gibt an, wie stark die Zufallsvariable um den Erwartungswert streut. Die Standardabweichung $\sigma$ ist die Wurzel aus der Varianz.
+
+Die Wahrscheinlichkeitsdichte der Gaußschen Verteilung ist gegeben durch:
+\begin{align}
+	f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}}.
+\end{align}
+Bei kontinuierlichen Verteilungen kann nicht mehr nach der Wahrscheinlichkeit für ein einzelnes Ereignis gefragt werden, denn diese ist immer $0$. Stattdessen wird nach der Wahrscheinlichkeit gefragt, dass die Zufallsvariable $X$ in einem bestimmten Intervall $[a, b]$ liegt. Diese Wahrscheinlichkeit berechnet sich durch das Integral:
+\begin{align}
+	P(a \le X \le b) = \int_a^b f(x) \, dx.
+\end{align}
+Es ist wichtig zu überprüfen, dass das Integral über alle möglichen Werte $1$ ergibt. Dies ist tatsächlich der Fall, denn es gilt:
+\begin{align}
+	\int_{-\infty}^{\infty} f(x) \, dx = 1.
+\end{align}
+Damit ist die Gaußsche Verteilung mathematisch vollständig beschrieben.
+
+\begin{beispiel}
+	Die Körpergröße von erwachsenen Männern in Deutschland ist annähernd normalverteilt mit Erwartungswert $\mu = 180$ cm und Standardabweichung $\sigma = 7$ cm. Die Wahrscheinlichkeit, dass ein zufällig ausgewählter Mann eine Körpergröße zwischen $173$ cm und $187$ cm hat, entspricht etwa $68\%$. Dies ist ein bekanntes Ergebnis der Gaußschen Verteilung: Etwa $68\%$ aller Werte liegen im Intervall $[\mu - \sigma, \mu + \sigma]$.
+\end{beispiel}
+
+Die Gaußsche Verteilung hat eine besondere Eigenschaft: Viele Größen in der Natur und in der Praxis sind annähernd normalverteilt. Dies liegt daran, dass die Gaußsche Verteilung oft entsteht, wenn viele unabhängige Zufallseinflüsse zusammenwirken. Dieser Zusammenhang wird durch den Zentralen Grenzwertsatz der Mathematik beschrieben.
+
+Es ist aber große Vorsicht geboten bei der Anwendung der Gaußschen Verteilung. Nicht jede Größe ist normalverteilt. Wird eine Größe fälschlicherweise als normalverteilt angenommen, können die Ergebnisse der Analyse völlig falsch sein. Zum Beispiel sind Aktienkurse nicht normalverteilt, obwohl dies oft angenommen wird. Extreme Ereignisse, sogenannte Ausreißer, treten bei Aktienkursen viel häufiger auf als die Gaußsche Verteilung vorhersagt. Dies kann zu erheblichen Fehleinschätzungen führen.
+
+Die Gaußsche Verteilung ist ein mächtiges Werkzeug, aber sie muss mit Genauigkeit und Vorsicht angewendet werden. Nur wenn die Voraussetzungen für ihre Anwendung erfüllt sind, liefert sie zuverlässige Ergebnisse.
+
 \section{Zusammenfassung}
 \subsection{Ausblick}
 	
