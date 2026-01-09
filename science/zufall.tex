@@ -34,7 +34,7 @@ Zufall wird in der Mathematik beschrieben für diskrete und kontinuierliche Erei
 
 Um jede Unruhe über den Ausgang des Zufalls allen Beteiligten zu nehmen, wird der Zufall für diskrete Ereignisse mit Hilfe der Mathematik beschrieben und analysiert. 
 
-\subsection{Definition}
+\subsection{Definitionen}
 
 Für das diskrete Ereignis, bei dem ein Würfel einmal geworfen wird, können folgende diskrete Ereignisse zufällig eintreten. Der Würfel kann auf die Augenzahl $1$ fallen, der Würfel kann auf die Augenzahl $2$ fallen, ..., der Würfel kann auf die Augenzahl $6$ fallen. Dabei ist jeder Fall des Würfels auf eine andere Augenzahl ein Ereignis. Es gibt damit also sechs Ereignisse beim Würfeln des Würfels mit sechs Seiten.  
 
@@ -67,7 +67,7 @@ Für die Zufallsvariable $X$ von (\ref{math:var-x}) ergibt sich damit ein Erwart
 \end{align}
 Das bedeutet, bevor wir den Würfel einmal gewürfelt haben, erwarten wir, dass der Würfel auf die Augenzahl 3,5 fällt. Diese Augenzahl gibt es nicht. Der Erwartungswert aber beschreibt formal am genauesten, welcher Ausgang bei diesem Versuch wirklich zu erwarten ist. Denn erst wenn wir diesen Versuch oft wiederholen, ist es interessant, wie der tatsächliche Ausgang des Versuches vom Erwartungswert abweicht.
 
-\section{3-SAT}
+\section{3-KNF Algorithmus}
 
 Gegeben sei eine 3-KNF Formel $\psi$ mit $m$ Klauseln $C_1, \dots, C_m$ und $n$ Variablen $x_1, \dots, x_n$. Die Variablen $x_i$ können nur einen Wert aus $\{0, 1\}$ annehmen. Jede Klausel $C_j$ enthält genau 3 Literale. Ein einfacher Algorithmus, der Zufall gebraucht, ermöglicht es, eine Approximationsgüte von $7/8$ zu erreichen. Das heißt, dass im Erwartungswert mindestens $87.5\%$ aller erfüllbaren Klauseln von $\psi$ erfüllt werden. Warum werden mit diesem Algorithmus $87.5\%$ aller erfüllbaren Klauseln erfüllt und warum ist das gut? Um $100.0\%$ aller erfüllbaren Klauseln von $\psi$ zu erfüllen, ist eine exponentielle Laufzeit in der Anzahl $n$ der Variablen nötig, die alle Zuweisungen von $\{0, 1\}$ zu den Variablen $x_i$ prüft. Daher verwendet man in der Praxis auch gute Lösungen, die nicht optimal sind, aber dafür effizient berechnet werden können.
 
@@ -80,7 +80,7 @@ Die Arbeitsweise des Algorithmus mit Zufall für 3-KNF ist:
 	\end{itemize}
 	\item Die Zuweisungen der Werte $\{0, 1\}$ zu den Variablen $x_i$ erfolgen unabhängig voneinander.
 \end{enumerate}
-\textbf{Wahrscheinlichkeit für eine Klausel}: Eine Klausel $C_j = (l_1 \lor l_2 \lor l_3)$ ist nur dann nicht erfüllbar bzw. Falsch, wenn alle drei Literale in ihrer Interpretation jeweils den Wert Falsch haben. Da den Variablen unabhängig voneinander und mit Wahrscheinlichkeit $1/2$ ein Wert aus $\{0, 1\}$ zugewiesen wird, gilt:
+Eine Klausel $C_j = (l_1 \lor l_2 \lor l_3)$ ist nur dann nicht erfüllbar bzw. Falsch, wenn alle drei Literale in ihrer Interpretation jeweils den Wert Falsch haben. Da den Variablen unabhängig voneinander und mit Wahrscheinlichkeit $1/2$ ein Wert aus $\{0, 1\}$ zugewiesen wird, gilt:
 \begin{equation}
 	P(C_j \text{ ist Falsch}) = \left(\frac{1}{2}\right)^3 = \frac{1}{8}
 \end{equation}
@@ -88,7 +88,7 @@ Die Wahrscheinlichkeit, dass die Klausel $C_j$ erfüllt ist, beträgt somit:
 \begin{equation}
 	P(C_j \text{ ist Wahr}) = 1 - P(C_j \text{ ist falsch}) = 1 - \frac{1}{8} = \frac{7}{8}
 \end{equation}
-\textbf{Erwartungswert der erfüllten Klauseln}: Wir definieren Indikatorvariablen $Y_j$ für $j = 1, \dots, m$:
+Für den Erwartungswert der Anzahl der erfüllten Klauseln wird die Indikatorvariable $Y_j$ definiert für $j = 1, \dots, m$:
 \begin{equation}
 	Y_j = 
 	\begin{cases} 
@@ -114,8 +114,8 @@ Das bedeutet, die Lösung des Algorithmus mit Zufall für 3-KNF erfüllt im Erwa
 Der Algorithmus mit Zufall für 3-KNF wurde in Python implementiert. Es wurden Experimente durchgeführt. Abbildung \ref{fig:experiments} zeigt die Ergebnisse der Experimente.
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.8\textwidth]{../experiment-results.pdf}
-	\caption{Experimentelle Ergebnisse des 3-SAT Algorithmus}
+	\includegraphics[width=0.95\textwidth]{../experiment-results.pdf}
+	\caption{Experimentelle Ergebnisse des 3-KNF Algorithmus mit Zufall}
 	\label{fig:experiments}
 \end{figure}
 Auf der x-Achse ist die Anzahl der Variablen und auf der y-Achse die Anzahl erfüllter Klauseln aufgetragen. In grün eingezeichnet ist die Anzahl der erfüllbaren Klauseln. In blau eingezeichnet ist die Anzahl der erfüllten Klauseln durch den 3-KNF Algorithmus mit Zufall und in rot eingezeichnet ist die erwartete Anzahl erfüllter Klauseln durch den 3-KNF Algorithmus mit Zufall.
