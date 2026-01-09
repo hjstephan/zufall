@@ -82,25 +82,67 @@ python run_experiments.py
 
 ## Erwartete Ausgabe
 
-```
-==================================================================================
-3-SAT RANDOMISIERTER ALGORITHMUS - EXPERIMENTELLE ANALYSE
-==================================================================================
+<pre>
+=========================================================================================================
+3-KNF Algorithmus mit Zufall
+=========================================================================================================
 
 ### EXPERIMENT 1: Variation der Variablenanzahl ###
-(Verhältnis Klauseln/Variablen = 4.0, 100 Trials pro Konfiguration)
   Analysiere: 5 Variablen, 20 Klauseln...
-  Analysiere: 8 Variablen, 32 Klauseln...
-  ...
+  Analysiere: 10 Variablen, 40 Klauseln...
+  Analysiere: 15 Variablen, 60 Klauseln...
+  Analysiere: 20 Variablen, 80 Klauseln...
+  Analysiere: 25 Variablen, 100 Klauseln...
 
-Ergebnisse - Variable Anzahl
+Ergebnisse - Variablenanzahl
 =========================================================================================================
 Vars   Klauseln  Ø Erfüllt   Std      Theo %     Opt %      Ø Optimal  
 =========================================================================================================
-5      20        17.48       1.21     99.91%     87.89%     19.89      
-8      32        28.02       1.52     100.07%    87.54%     32.01      
-...
-```
+5      20        17.64       1.41     100.80   % 88.64%     19.90      
+10     40        34.52       1.90     98.63    % 86.56%     39.88      
+15     60        52.52       2.53     100.04   % 87.80%     59.82      
+20     80        69.46       3.33     99.23    % N/A        N/A        
+25     100       87.82       3.50     100.37   % N/A        N/A        
+=========================================================================================================
+
+### EXPERIMENT 2: Variation der Klauseldichte ###
+  Dichte 2.0: 30 Klauseln...
+  Dichte 4.0: 60 Klauseln...
+  Dichte 6.0: 90 Klauseln...
+  Dichte 8.0: 120 Klauseln...
+
+Ergebnisse - Klauseldichte
+=========================================================================================================
+Vars   Klauseln  Ø Erfüllt   Std      Theo %     Opt %      Ø Optimal  
+=========================================================================================================
+15     30        26.32       1.67     100.27   % 87.73%     30.00      
+15     60        52.52       2.53     100.04   % 87.80%     59.82      
+15     90        78.52       3.04     99.71    % 88.68%     88.54      
+15     120       104.68      3.06     99.70    % 89.65%     116.76     
+=========================================================================================================
+
+### EXPERIMENT 3: Vergleich mit optimaler Lösung ###
+  Analysiere: 4 Variablen, 12 Klauseln...
+  Analysiere: 6 Variablen, 18 Klauseln...
+  Analysiere: 8 Variablen, 24 Klauseln...
+  Analysiere: 10 Variablen, 30 Klauseln...
+  Analysiere: 12 Variablen, 36 Klauseln...
+  Analysiere: 14 Variablen, 42 Klauseln...
+
+Ergebnisse - Optimaler Vergleich
+=========================================================================================================
+Vars   Klauseln  Ø Erfüllt   Std      Theo %     Opt %      Ø Optimal  
+=========================================================================================================
+4      12        10.45       1.50     99.52    % 87.08%     12.00      
+6      18        15.85       1.66     100.63   % 88.06%     18.00      
+8      24        20.65       1.50     98.33    % 86.04%     24.00      
+10     30        25.85       1.57     98.48    % 86.17%     30.00      
+12     36        31.30       1.69     99.37    % 86.94%     36.00      
+14     42        36.15       2.18     98.37    % 86.07%     42.00      
+=========================================================================================================
+
+Grafik als 'experiment-results.svg' gespeichert.
+</pre>
 
 ## Analyse der experimentellen Ergebnisse
 
