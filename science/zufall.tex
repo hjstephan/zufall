@@ -221,9 +221,41 @@ Damit ist die Gaußsche Verteilung mathematisch vollständig beschrieben.
 
 Die Gaußsche Verteilung hat eine besondere Eigenschaft: Viele Größen in der Natur und in der Praxis sind annähernd normalverteilt. Dies liegt daran, dass die Gaußsche Verteilung oft entsteht, wenn viele unabhängige Zufallseinflüsse zusammenwirken. Dieser Zusammenhang wird durch den Zentralen Grenzwertsatz der Mathematik beschrieben.
 
-Es ist aber große Vorsicht geboten bei der Anwendung der Gaußschen Verteilung. Nicht jede Größe ist normalverteilt. Wird eine Größe fälschlicherweise als normalverteilt angenommen, können die Ergebnisse der Analyse völlig falsch sein. Zum Beispiel sind Aktienkurse nicht normalverteilt, obwohl dies oft angenommen wird. Extreme Ereignisse, sogenannte Ausreißer, treten bei Aktienkursen viel häufiger auf als die Gaußsche Verteilung vorhersagt. Dies kann zu erheblichen Fehleinschätzungen führen.
+Nicht jede Größe ist normalverteilt. Wird eine Größe fälschlicherweise als normalverteilt angenommen, können die Ergebnisse der Analyse völlig falsch sein. Zum Beispiel sind Aktienkurse nicht normalverteilt, obwohl dies oft angenommen wird. Extreme Ereignisse, sogenannte Ausreißer, treten bei Aktienkursen viel häufiger auf als die Gaußsche Verteilung vorhersagt. Dies kann zu erheblichen Fehleinschätzungen führen.
 
 Die Gaußsche Verteilung ist ein mächtiges Werkzeug, aber sie muss mit Genauigkeit und Vorsicht angewendet werden. Nur wenn die Voraussetzungen für ihre Anwendung erfüllt sind, liefert sie zuverlässige Ergebnisse.
+
+\subsection{Anwendung: Hybrider Registerspeicher}
+
+Die Gaußsche Verteilung findet nicht nur in der Statistik Anwendung, sondern auch in der Informatik und im Hardware-Design. Ein interessantes Beispiel ist die Optimierung von Registerspeichern in Prozessoren. Dabei wird beobachtet, dass die Zugriffe auf Register nicht gleichmäßig verteilt sind, sondern einer Gaußschen Verteilung folgen. Einige Register werden sehr häufig verwendet, während andere Register selten genutzt werden.
+
+Anstatt alle Register gleich zu behandeln, kann man eine hierarchische Struktur einführen. Die Register, die am häufigsten genutzt werden, werden in schnellem und teurem Speicher realisiert. Die Register, die seltener genutzt werden, werden in langsamem und günstigem Speicher realisiert. Für diesen Versuch wird eine Zufallsvariable $X$ definiert durch
+\begin{align}
+	X = \{\text{Register-Index, auf den zugegriffen wird}\}.
+\end{align}
+Die Beobachtung zeigt, dass $X$ annähernd normalverteilt ist mit einem Erwartungswert $\mu$ und einer Standardabweichung $\sigma$. Der Erwartungswert $\mu$ gibt an, welcher Register-Index im Mittel am häufigsten genutzt wird. Die Standardabweichung $\sigma$ gibt an, wie stark die Zugriffe um diesen Erwartungswert streuen.
+
+Der hierarchische Aufbau des Registerspeichers erfolgt in zwei Bereichen. Der erste Bereich, genannt Tier 1, enthält etwa 32 bis 64 Register. Diese Register liegen nahe beim Erwartungswert $\mu$ der Verteilung, also im Intervall $[\mu - \sigma, \mu + \sigma]$. Wie bei der Körpergröße im vorherigen Beispiel wissen wir, dass etwa $68\%$ aller Zugriffe auf Register in diesem Intervall liegen. Diese Register werden in schnellem Speicher realisiert. Der zweite Bereich, genannt Tier 2, enthält alle anderen Register. Diese Register werden in langsamem, aber günstigem Speicher realisiert.
+
+Um zu ermitteln, welche Register zu Tier 1 gehören, muss das Zugriffsmuster analysiert werden. Dafür wird während des Betriebs gezählt, wie oft auf jedes Register zugegriffen wird. Diese Zählung ist ein Versuch mit diskreten Ereignissen. Für jedes Register $i$ wird eine Zufallsvariable $Y_i$ definiert durch
+\begin{align}
+	Y_i = \{\text{Anzahl der Zugriffe auf Register } i\}.
+\end{align}
+Nach einer gewissen Laufzeit kann aus den Werten von $Y_i$ die Verteilung der Zugriffe ermittelt werden. Die Register mit den höchsten Werten von $Y_i$ werden zu Tier 1 zugeordnet.
+
+Es ist wichtig zu beachten, dass die Zugriffsmuster sich während der Laufzeit ändern können. Ein Programm kann zunächst häufig auf bestimmte Register zugreifen und später auf andere Register. Der Erwartungswert $\mu$ und die Standardabweichung $\sigma$ der Verteilung können sich also verschieben. Damit ist die Zuordnung der Register zu den Bereichen Tier 1 und Tier 2 nicht statisch, sondern muss dynamisch angepasst werden. Dies ist ein wichtiges Detail, das bei der Implementierung beachtet werden muss. Die mathematische Beschreibung mit der Gaußschen Verteilung bleibt dabei vollständig - es ändert sich nur, welche Register gerade im Intervall $[\mu - \sigma, \mu + \sigma]$ liegen.
+
+Die Kostenersparnis durch diesen Ansatz lässt sich berechnen. Sei $n_1$ die Anzahl der Register in Tier 1 und $n_2$ die Anzahl der Register in Tier 2. Sei $c_1$ der Preis pro Register in Tier 1 und $c_2$ der Preis pro Register in Tier 2, wobei $c_1 \gg c_2$ gilt. Die Gesamtkosten betragen
+\begin{align}
+	C = n_1 \cdot c_1 + n_2 \cdot c_2.
+\end{align}
+Ohne die hierarchische Struktur wären alle $n_1 + n_2$ Register in teurem Speicher realisiert, mit Gesamtkosten von $(n_1 + n_2) \cdot c_1$. Die Kostenersparnis beträgt damit
+\begin{align}
+	\Delta C = (n_1 + n_2) \cdot c_1 - (n_1 \cdot c_1 + n_2 \cdot c_2) = n_2 \cdot (c_1 - c_2).
+\end{align}
+Da typischerweise $n_2 \gg n_1$ gilt, ist die Kostenersparnis erheblich.
+
+Dieses Beispiel zeigt, wie die Gaußsche Verteilung in der Praxis angewendet werden kann. Es zeigt auch, wie wichtig es ist, die Voraussetzungen zu überprüfen. Die Annahme, dass die Zugriffe auf Register normalverteilt sind, muss im Detail überprüft werden. Besteht ein anderes Zugriffsmuster, kann die hierarchische Struktur ineffizient sein.
 
 \section{Zusammenfassung}
 
@@ -234,6 +266,8 @@ Für die Analyse von Versuchen wurde das Konzept der Zufallsvariable eingeführt
 Am Beispiel des 3-KNF Algorithmus wurde gezeigt, wie Zufall in der Informatik eingesetzt wird, um effiziente Algorithmen zu entwickeln. Der Algorithmus mit Zufall für 3-KNF erreicht eine Approximationsgüte von $\frac{7}{8}$. Das bedeutet, dass im Erwartungswert mindestens $87{,}5\%$ aller erfüllbaren Klauseln erfüllt werden. Die experimentellen Ergebnisse zeigen, dass die theoretische Analyse mit der Praxis übereinstimmt. Dies ist ein Beispiel dafür, dass die mathematische Beschreibung des Zufalls in der Praxis anwendbar ist und zu verlässlichen Ergebnissen führt.
 
 Die Wahrscheinlichkeitsverteilungen sind zentrale Werkzeuge für die Analyse von Versuchen mit Zufall. Es wurden drei Verteilungen vorgestellt: die Bernoulli-Verteilung für Versuche mit zwei möglichen Ereignissen, die geometrische Verteilung für die Anzahl der Versuche bis zum ersten Erfolg, und die Gaußsche Verteilung für kontinuierliche Ereignisse. Jede dieser Verteilungen hat ihre spezifischen Anwendungsbereiche. Es wurde mehrfach betont, dass die Wahl der richtigen Verteilung entscheidend ist. Kleinste Details in der Beschreibung des Versuchs können darüber entscheiden, welche Verteilung anwendbar ist. Wird eine andere Verteilung gewählt, führt dies zu anderen Ergebnissen in der Analyse.
+
+Am Beispiel des hybriden Registerspeichers wurde eine konkrete Anwendung der Gaußschen Verteilung in der Hardware-Entwicklung gezeigt. Die Beobachtung, dass Zugriffe auf Prozessorregister annähernd normalverteilt sind, ermöglicht den Aufbau einer hierarchischen Speicherarchitektur. Register im Zentrum der Verteilung werden in schnellem, teurem Speicher realisiert, während selten genutzte Register in langsamem, günstigem Speicher untergebracht werden. Die Kostenersparnis ist erheblich, da typischerweise nur etwa 10 bis 15 Prozent der Register in teurer Technologie gefertigt werden müssen. Dieses Beispiel zeigt, wie die mathematische Beschreibung des Zufalls zu praktischen Verbesserungen in der Informationsverarbeitung führen kann.
 
 Die Lehre vom Zufall in der Mathematik muss mit Genauigkeit und Vorsicht entwickelt und angewendet werden. Wann immer die mathematische Beschreibung so weit von der Praxis entfernt ist, dass sie nicht mehr anwendbar ist, wird das eigentliche Ziel der Mathematik in diesem Thema verletzt. Die Mathematik soll helfen, den Zufall zu verstehen und in der Praxis verlässliche Entscheidungen zu treffen.
 
@@ -247,6 +281,8 @@ In der Statistik werden die Konzepte der Wahrscheinlichkeitstheorie verwendet, u
 
 Der Einsatz von Zufall in Algorithmen, wie beim 3-KNF Algorithmus gezeigt, ist ein aktives Forschungsgebiet in der Informatik. Randomisierte Algorithmen können oft effizienter sein als deterministische Algorithmen. Sie werden in vielen Bereichen eingesetzt, von der Kryptographie über die Optimierung bis hin zum maschinellen Lernen. Das Verständnis der wahrscheinlichkeitstheoretischen Grundlagen ist essentiell, um solche Algorithmen zu entwickeln und zu analysieren.
 
-Die Lehre vom Zufall in der Mathematik ist ein hilfreiches und vielversprechendes Gebiet gerade für die Entwicklung von Algorithmen. Sie verbindet abstrakte mathematische Konzepte mit konkreten praktischen Anwendungen und kann dabei helfen, Probleme effizienter zu lösen.
+Die Anwendung der Gaußschen Verteilung auf Hardware-Architekturen eröffnet weitere Forschungsmöglichkeiten. Dies wurde beim hybriden Registerspeicher gezeigt. Ähnliche Ansätze können auf Cache-Hierarchien, Speicherverwaltung und Netzwerkarchitekturen übertragen werden. Überall dort, wo Zugriffsmuster beobachtbar sind und einer statistischen Verteilung folgen, kann durch geschickte Ausnutzung dieser Verteilung eine Optimierung erreicht werden. Die Herausforderung liegt dabei darin, die Annahmen über die Verteilung zu überprüfen und die Systeme so zu gestalten, dass sie sich an veränderte Muster anpassen können. Künstliche Intelligenz kann dabei helfen, die Parameter der Verteilungen kontinuierlich zu lernen und die Architektur entsprechend anzupassen.
+
+Die Lehre vom Zufall in der Mathematik ist ein hilfreiches und vielversprechendes Gebiet gerade für die Entwicklung von Algorithmen. Sie verbindet mathematische Beschreibungen mit praktischen Anwendungen und kann dabei helfen, Probleme effizienter zu lösen.
 	
 \end{document}
