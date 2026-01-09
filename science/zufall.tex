@@ -5,6 +5,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{geometry}
+\usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
 
 \geometry{margin=2.5cm}
@@ -88,6 +89,19 @@ Die erwartete Gesamtzahl aller erfüllten Klauseln beträgt damit also $\frac{7}
 	E[Y] = \frac{7}{8}m \ge \frac{7}{8} O.
 \end{equation}
 Das bedeutet, die Lösung des Algorithmus mit Zufall für 3-KNF erfüllt im Erwartungswert mindestens $\frac{7}{8}$ aller Klauseln der optimalen Anzahl an Klauseln, die überhaupt in $\psi$ erfüllt werden können. Die Laufzeit dieses Algorithmus mit Zufall für 3-KNF ist linear in der Anzahl der Klauseln und Variablen.
+
+\subsection{Implementierung}
+
+Der Algorithmus mit Zufall für 3-KNF wurde in Python implementiert. Es wurden Experimente durchgeführt. Abbildung \ref{fig:experiments} zeigt die Ergebnisse der Experimente.
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../experiment-results.pdf}
+	\caption{Experimentelle Ergebnisse des 3-SAT Algorithmus}
+	\label{fig:experiments}
+\end{figure}
+Auf der x-Achse ist die Anzahl der Variablen und auf der y-Achse die Anzahl erfüllter Klauseln aufgetragen. In grün eingezeichnet ist die Anzahl der erfüllbaren Klauseln. In blau eingezeichnet ist die Anzahl der erfüllten Klauseln durch den 3-KNF Algorithmus mit Zufall und in rot eingezeichnet ist die erwartete Anzahl erfüllter Klauseln durch den 3-KNF Algorithmus mit Zufall.
+
+Beobachtbar ist, dass die Anzahl der erfüllten Klauseln durch den 3-KNF Algorithmus mit Zufall der theoretischen erwarteten Anzahl erfüllter Klauseln entspricht. Bis zu einer Anzahl von 15 Variablen ist die Anzahl der erfüllten Klauseln durch den 3-KNF Algorithmus mit Zufall nicht so hoch wie die optimale, d.h. maximale, Anzahl erfüllbarer Klauseln.
 
 \section{Zusammenfassung}
 \subsection{Ausblick}
