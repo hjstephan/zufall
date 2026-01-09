@@ -44,11 +44,28 @@ Für Versuche, die durch diskrete Ereignisse beschrieben werden, ist die Überpr
 
 \subsection{Zufallsvariable}
 
-Für Versuche, die durch diskrete Ereignisse beschrieben werden, ist es für die Analyse manchmal hilfreich, eine Zufallsvariable zu verwenden. Dabei beschreibt die Zufallsvariable den Zufall für das Ereignis variabel für den konkreten Ausgang. Zum Beispiel kann für den Versuch, einen Würfel zu würfeln, eine Zufallsvariable definiert werden durch $X = \{\text{Anzahl der Augen, auf die der Würfel fällt}\}$.
+Für Versuche, die durch diskrete Ereignisse beschrieben werden, ist es für die Analyse manchmal hilfreich, eine Zufallsvariable zu verwenden. Dabei beschreibt die Zufallsvariable den Zufall für das Ereignis variabel für den konkreten Ausgang. Zum Beispiel kann für den Versuch, einen Würfel zu würfeln, eine Zufallsvariable definiert werden durch 
+\begin{align}
+	\label{math:var-x}
+	X = \{\text{Anzahl der Augen, auf die der Würfel fällt}\}.
+\end{align}
 
 Es fiel auf, dass für jedes Ereignis dieses Versuches gilt, dass der Würfel beim Wurf auf die Augenzahl $k$ fällt, die \textit{Wahrscheinlichkeit} $\frac{1}{6}$ hat, $k \in \{1, \ldots, 6\}$. Mit der Zufallsvariable ist diese Beobachtung nun so beschreibbar $P(X = k) = \frac{1}{6}$, wobei $P$ für Probability steht.
 
 \subsection{Erwartungswert}
+
+Bei dem Versuch, den Würfel zu würfeln, ist es vor dem Versuch von Bedeutung, zu ermitteln, welcher Ausgang des Versuches zu erwarten ist. Für Versuche, die durch diskrete Ereignisse beschrieben werden, wird der Erwartungswert $E$ für eine Zufallsvariable $X$ so berechnet:
+\begin{align}
+	E[X] &= \sum_{k \in \Omega} k \cdot P(X = k).
+\end{align}
+Für die Zufallsvariable $X$ von (\ref{math:var-x}) ergibt sich damit ein Erwartungswert von
+\begin{align}
+	E[X] &= \sum_{k \in \{1, \ldots, 6\}} k \cdot P(X = k) \\
+		 &= 1 \cdot P(X = 1) + \ldots + 6 \cdot P(X = 6) \\
+		 &= 1 \cdot \frac{1}{6} + \ldots + 6 \cdot \frac{1}{6} \\
+		 &= 3,5.
+\end{align}
+Das bedeutet, bevor wir den Würfel einmal gewürfelt haben, erwarten wir, dass der Würfel auf die Augenzahl 3,5 fällt. Diese Augenzahl gibt es nicht. Der Erwartungswert aber beschreibt formal am genauesten, welcher Ausgang bei diesem Versuch wirklich zu erwarten ist. Denn erst wenn wir diesen Versuch oft wiederholen, ist es interessant, wie der tatsächliche Ausgang des Versuches vom Erwartungswert abweicht.
 
 \section{3-SAT}
 
