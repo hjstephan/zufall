@@ -1,0 +1,46 @@
+\documentclass[tikz, border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{amsmath}
+
+\begin{document}
+	
+	\begin{tikzpicture}
+		\begin{axis}[
+			no markers, 
+			domain=-4:4, 
+			samples=100,
+			axis lines=left, 
+			% ylabel direkt über der Achse positioniert
+			ylabel={$f(x)$},
+			every axis y label/.style={at={(axis description cs:0,1)}, anchor=south},
+			xlabel={$x$}, 
+			every axis x label/.style={at={(current axis.right of origin)}, anchor=west},
+			height=7cm, % Höhe leicht erhöht für die Formel
+			width=11cm,
+			xtick={-2, 0, 2},
+			xticklabels={$\mu-\sigma$, $\mu$, $\mu+\sigma$},
+			ytick=\empty,
+			enlargelimits=upper,
+			clip=false
+			]
+			
+			% Definition der Gauß-Funktion
+			\pgfmathdeclarefunction{gauss}{3}{%
+				\pgfmathparse{1/(#3*sqrt(2*pi))*exp(-((#1-#2)^2)/(2*#3^2))}%
+			}
+			
+			% Die Kurve plotten (Beispiel: mu=0, sigma=1)
+			\addplot [very thick, cyan!70!black] {gauss(x, 0, 1)};
+			
+			% Vertikale Linie für den Mittelwert (mu)
+			\draw [dashed, gray] (axis cs:0,0) -- (axis cs:0,0.4) node[above, black] {$\mu$};
+			
+			% Hilfslinien für Standardabweichungen
+			\draw [dotted, gray] (axis cs:1,0) -- (axis cs:1,0.24);
+			\draw [dotted, gray] (axis cs:-1,0) -- (axis cs:-1,0.24);
+			
+		\end{axis}
+	\end{tikzpicture}
+	
+\end{document}
