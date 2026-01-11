@@ -67,6 +67,27 @@ Für die Zufallsvariable $X$ von (\ref{math:var-x}) ergibt sich damit ein Erwart
 \end{align}
 Das bedeutet, bevor wir den Würfel einmal gewürfelt haben, erwarten wir, dass der Würfel auf die Augenzahl 3,5 fällt. Diese Augenzahl gibt es nicht. Der Erwartungswert aber beschreibt formal am genauesten, welcher Ausgang bei diesem Versuch wirklich zu erwarten ist. Denn erst wenn wir diesen Versuch oft wiederholen, ist es interessant, wie der tatsächliche Ausgang des Versuches vom Erwartungswert abweicht.
 
+\subsection{Bedingte Wahrscheinlichkeit}
+Die bedingte Wahrscheinlichkeit geht auf Arbeiten von \textsc{Pierre-Simon Laplace} und auf \textsc{Andrej N. Kolmogorow} zurück. Seien $A$ und $B$ zwei Ereignisse mit $P(B) > 0$, dann beschreibt die bedingte Wahrscheinlichkeit $P(A \mid B)$ die Wahrscheinlichkeit des Ereignisses $A$ unter der Voraussetzung, dass das Ereignis $B$ bereits eingetreten ist. Formal wird die \textit{bedingte Wahrscheinlichkeit} definiert durch
+
+\begin{align}
+P(A \mid B) = \frac{P(A \cap B)}{P(B)}.
+\end{align}
+Aus der Definition folgt unmittelbar die \emph{Produktregel}
+
+\begin{align}
+P(A \cap B) = P(A \mid B)\cdot P(B),
+\end{align}
+welche eine wichtige Rolle in der Wahrscheinlichkeitsrechnung hat. Eine Besonderheit ergibt sich im Fall der Unabhängigkeit zweier Ereignisse. Die \textit{Unabhängigkeit} von $A$ und $B$ ist definiert durch
+\begin{align}
+P(A \cap B) = P(A)\cdot P(B).
+\end{align}
+Setzt man diese Beziehung in die Definition der bedingten Wahrscheinlichkeit ein, so erhält man
+\begin{align}
+P(A \mid B) = \frac{P(A)\cdot P(B)}{P(B)} = P(A),
+\end{align}
+was zeigt, dass das Eintreten von $B$ keinen Einfluss auf die Wahrscheinlichkeit von $A$ hat. Dieses Ergebnis war zu erwarten, denn wenn $A$ und $B$ unabhängige Ereignisse sind, also $A \cap B = \emptyset$, dann kann $B$ keinen Einfluss haben auf $P(A \mid B)$, also $P(A \mid B) = P(A)$. Warum die formale Definition der bedingten Wahrscheinlichkeit (7) auch Sinn macht, ist die Beobachtung, dass für $P(A \mid B)$ folgendes bestimmt werden soll. Unter der Voraussetzung, dass $B$ gilt, ist die Wahrscheinlichkeit von $A$ zu bestimmen und $A$ und $B$ sind abhängig, das heißt $A \cap B \neq \emptyset$. Es ist $B$ als die Menge aller Ereignisse zu wählen, da nach der konkreten Wahrscheinlichkeit von $A$ gefragt wird unter der Voraussetzung, dass $B$ gilt, das heißt $P(A \cap B) / P(B)$.
+
 \section{3-KNF Algorithmus}
 
 Gegeben sei eine 3-KNF Formel $\psi$ mit $m$ Klauseln $C_1, \dots, C_m$ und $n$ Variablen $x_1, \dots, x_n$. Die Variablen $x_i$ können nur einen Wert aus $\{0, 1\}$ annehmen. Jede Klausel $C_j$ enthält genau 3 Literale. Ein einfacher Algorithmus, der Zufall gebraucht, ermöglicht es, eine Approximationsgüte von $7/8$ zu erreichen. Das heißt, dass im Erwartungswert mindestens $87.5\%$ aller erfüllbaren Klauseln von $\psi$ erfüllt werden. Warum werden mit diesem Algorithmus $87.5\%$ aller erfüllbaren Klauseln erfüllt und warum ist das gut? Um $100.0\%$ aller erfüllbaren Klauseln von $\psi$ zu erfüllen, ist eine exponentielle Laufzeit in der Anzahl $n$ der Variablen nötig, die alle Zuweisungen von $\{0, 1\}$ zu den Variablen $x_i$ prüft. Daher verwendet man in der Praxis auch gute Lösungen, die nicht optimal sind, aber dafür effizient berechnet werden können.
@@ -111,15 +132,13 @@ Das bedeutet, die Lösung des Algorithmus mit Zufall für 3-KNF erfüllt im Erwa
 
 \subsection{Implementierung}
 
-Der Algorithmus mit Zufall für 3-KNF wurde in Python implementiert. Es wurden Experimente durchgeführt. Abbildung \ref{fig:experiments} zeigt die Ergebnisse der Experimente.
+Der Algorithmus mit Zufall für 3-KNF wurde in Python implementiert. Es wurden Experimente durchgeführt. Abbildung \ref{fig:experiments} zeigt die Ergebnisse der Experimente. Auf der x-Achse ist die Anzahl der Variablen und auf der y-Achse die Anzahl erfüllter Klauseln aufgetragen. In grün eingezeichnet ist die Anzahl der erfüllbaren Klauseln. In blau eingezeichnet ist die Anzahl der erfüllten Klauseln durch den 3-KNF Algorithmus mit Zufall und in rot eingezeichnet ist die erwartete Anzahl erfüllter Klauseln durch den 3-KNF Algorithmus mit Zufall.
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.95\textwidth]{experiment-results.pdf}
 	\caption{Experimentelle Ergebnisse des 3-KNF Algorithmus mit Zufall}
 	\label{fig:experiments}
 \end{figure}
-Auf der x-Achse ist die Anzahl der Variablen und auf der y-Achse die Anzahl erfüllter Klauseln aufgetragen. In grün eingezeichnet ist die Anzahl der erfüllbaren Klauseln. In blau eingezeichnet ist die Anzahl der erfüllten Klauseln durch den 3-KNF Algorithmus mit Zufall und in rot eingezeichnet ist die erwartete Anzahl erfüllter Klauseln durch den 3-KNF Algorithmus mit Zufall.
-
 Beobachtbar ist, dass die Anzahl der erfüllten Klauseln durch den 3-KNF Algorithmus mit Zufall der theoretischen erwarteten Anzahl erfüllter Klauseln entspricht. Bis zu einer Anzahl von 15 Variablen ist die Anzahl der erfüllten Klauseln durch den 3-KNF Algorithmus mit Zufall nicht so hoch wie die optimale, d.h. maximale, Anzahl erfüllbarer Klauseln.
 
 \section{Wahrscheinlichkeitsverteilungen}
@@ -243,7 +262,7 @@ Um zu ermitteln, welche Register zu Tier 1 gehören, muss das Zugriffsmuster ana
 \end{align}
 Nach einer gewissen Laufzeit kann aus den Werten von $Y_i$ die Verteilung der Zugriffe ermittelt werden. Die Register mit den höchsten Werten von $Y_i$ werden zu Tier 1 zugeordnet.
 
-Es ist wichtig zu beachten, dass die Zugriffsmuster sich während der Laufzeit ändern können. Ein Programm kann zunächst häufig auf bestimmte Register zugreifen und später auf andere Register. Der Erwartungswert $\mu$ und die Standardabweichung $\sigma$ der Verteilung können sich also verschieben. Damit ist die Zuordnung der Register zu den Bereichen Tier 1 und Tier 2 nicht statisch, sondern muss dynamisch angepasst werden. Dies ist ein wichtiges Detail, das bei der Implementierung beachtet werden muss. Die mathematische Beschreibung mit der Gaußschen Verteilung bleibt dabei vollständig - es ändert sich nur, welche Register gerade im Intervall $[\mu - \sigma, \mu + \sigma]$ liegen.
+Es ist wichtig zu beachten, dass die Zugriffsmuster sich während der Laufzeit ändern können. Ein Programm kann zunächst häufig auf bestimmte Register zugreifen und später auf andere Register. Der Erwartungswert $\mu$ und die Standardabweichung $\sigma$ der Verteilung können sich also verschieben. Damit ist die Zuordnung der Register zu den Bereichen Tier 1 und Tier 2 nicht statisch, sondern muss dynamisch angepasst werden. Dies ist ein wichtiges Detail, das bei der Implementierung beachtet werden muss. Die mathematische Beschreibung mit der Gaußschen Verteilung bleibt dabei vollständig -- es ändert sich nur, welche Register gerade im Intervall $[\mu - \sigma, \mu + \sigma]$ liegen.
 
 Die Kostenersparnis durch diesen Ansatz lässt sich berechnen. Sei $n_1$ die Anzahl der Register in Tier 1 und $n_2$ die Anzahl der Register in Tier 2. Sei $c_1$ der Preis pro Register in Tier 1 und $c_2$ der Preis pro Register in Tier 2, wobei $c_1 \gg c_2$ gilt. Die Gesamtkosten betragen
 \begin{align}
