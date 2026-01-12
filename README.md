@@ -21,6 +21,14 @@ Ein Versuch gilt als mathematisch vollständig beschrieben, wenn die Summe der W
 **Analyse diskreter Ereignisse**  
 Ein großer Vorteil diskreter Ereignisse ist, dass sich Wahrscheinlichkeiten oft durch einfaches Abzählen ermitteln lassen. Beispiel: "Nicht die 3 würfeln". Wenn man wissen möchte, wie hoch die Wahrscheinlichkeit ist, dass der Würfel nicht auf die 3 fällt, betrachtet man die alternativen Ereignisse. Der Würfel zeigt eine $1, 2, 4, 5$ oder $6$. Dies sind insgesamt fünf günstige Ereignisse.Daraus ergibt sich eine Wahrscheinlichkeit von $\frac{5}{6}$.  
 
+**Markov-Ketten**  
+Die bedingte Wahrscheinlichkeit und die Unabhängigkeit von diskreten Ereignissen finden eine wichtige Anwendung in der Modellierung von Markov-Ketten. Eine Markov-Kette beschreibt einen Versuch, bei dem das System verschiedene Zustände durchlaufen kann. Die entscheidende Eigenschaft einer Markov-Kette ist die \textit{Gedächtnislosigkeit}. Diese besagt, dass die Wahrscheinlichkeit für den Übergang in den nächsten Zustand nur vom aktuellen Zustand abhängt und unabhängig ist von der gesamten Vorgeschichte des Systems.  
+
+**Wahrscheinlichkeitsverteilungen**  
+Wann immer die Lehre vom Zufall in der Mathematik so verlassen wird, dass sie in der Praxis nicht mehr anwendbar ist, verletzen wir das eigentliche Ziel der Mathematik in diesem wichtigen Thema. Beim Erwartungswert war dies schon der Fall, denn auf die Augenzahl 3,5 wird der Würfel nie zufällig fallen. Damit muss die Lehre vom Zufall in der Mathematik sehr vorsichtig entwickelt werden. Denn wenn man zum Beispiel den Versuch einen Würfel zu würfeln oft wiederholt, ist beobachtbar, dass die Abweichung vom Erwartungswert beachtlich ist.
+
+Die bekannten Wahrscheinlichkeitsverteilungen der Mathematik sind für die unterschiedlichen Versuche mit diskreten Ereignissen mit großer Genauigkeit und Vorsicht anzuwenden. Wird ein Versuch in seiner Beschreibung auf eine Anwendung einer Wahrscheinlichkeitsverteilung überprüft, können kleinste Details in der Beschreibung des Versuchs entscheidend sein für die Wahl der Wahrscheinlichkeitsverteilungen. Wird ein Detail in der Beschreibung des Versuchs übersehen und eine andere Wahrscheinlichkeitsverteilung gewählt, kann dies in der Analyse für den Versuch zu einem anderen Ergebnis führen.
+
 # 3-KNF Algorithmus mit Zufall
 
 ## Projektstruktur

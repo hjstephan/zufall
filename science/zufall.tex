@@ -6,6 +6,8 @@
 \usepackage{amsthm}
 \usepackage{geometry}
 \usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,shapes}
 \usepackage[hidelinks]{hyperref}
 
 \geometry{margin=2.5cm}
@@ -87,6 +89,93 @@ Setzt man diese Beziehung in die Definition der bedingten Wahrscheinlichkeit ein
 P(A \mid B) = \frac{P(A)\cdot P(B)}{P(B)} = P(A),
 \end{align}
 was zeigt, dass das Eintreten von $B$ keinen Einfluss auf die Wahrscheinlichkeit von $A$ hat. Dieses Ergebnis war zu erwarten, denn wenn $A$ und $B$ unabhängige Ereignisse sind, also $A \cap B = \emptyset$, dann kann $B$ keinen Einfluss haben auf $P(A \mid B)$, also $P(A \mid B) = P(A)$. Warum die formale Definition der bedingten Wahrscheinlichkeit (7) auch Sinn macht, ist die Beobachtung, dass für $P(A \mid B)$ folgendes bestimmt werden soll. Unter der Voraussetzung, dass $B$ gilt, ist die Wahrscheinlichkeit von $A$ zu bestimmen und $A$ und $B$ sind abhängig, das heißt $A \cap B \neq \emptyset$. Es ist $B$ als die Menge aller Ereignisse zu wählen, da nach der konkreten Wahrscheinlichkeit von $A$ gefragt wird unter der Voraussetzung, dass $B$ gilt, das heißt $P(A \cap B) / P(B)$.
+
+\section{Markov-Ketten}
+
+Die Konzepte der bedingten Wahrscheinlichkeit und der Unabhängigkeit finden eine wichtige Anwendung in der Modellierung von Markov-Ketten. Eine Markov-Kette beschreibt einen Versuch, bei dem das System verschiedene Zustände durchlaufen kann. Der entscheidende Aspekt einer Markov-Kette ist die \textit{Gedächtnislosigkeit} oder \textit{Markov-Eigenschaft}. Diese besagt, dass die Wahrscheinlichkeit für den Übergang in den nächsten Zustand nur vom aktuellen Zustand abhängt und unabhängig ist von der gesamten Vorgeschichte des Systems. Dies ist eine besondere Form der Unabhängigkeit.
+
+\begin{definition}[Markov-Kette]
+	Eine zeitdiskrete Markov-Kette ist ein stochastischer Prozess $(X_t)_{t \geq 0}$ mit endlichem Zustandsraum $S = \{s_1, s_2, \ldots, s_n\}$ und der Markov-Eigenschaft:
+	\begin{align}
+		P(X_{t+1} = s_j \mid X_t = s_i, X_{t-1}, \ldots, X_0) = P(X_{t+1} = s_j \mid X_t = s_i) = p_{ij}
+	\end{align}
+	wobei $p_{ij}$ die Übergangswahrscheinlichkeit von Zustand $s_i$ nach $s_j$ ist.
+\end{definition}
+
+Die Markov-Eigenschaft bedeutet also, dass der zukünftige Zustand $X_{t+1}$ unabhängig ist von allen vergangenen Zuständen $X_{t-1}, X_{t-2}, \ldots, X_0$, gegeben den aktuellen Zustand $X_t$. Diese bedingte Unabhängigkeit ist der Kern der Markov-Eigenschaft. Die Wahrscheinlichkeit $P(X_{t+1} = s_j \mid X_t = s_i)$ wird hier als Notation verwendet, um auszudrücken, dass das System sich im Zustand $s_i$ befindet. Die entscheidende Eigenschaft ist aber, dass diese Wahrscheinlichkeit vollständig durch $p_{ij}$ beschrieben wird und unabhängig davon ist, wie das System in den Zustand $s_i$ gelangt ist. Alle Übergangswahrscheinlichkeiten werden in der \textit{Übergangsmatrix} zusammengefasst.
+
+\begin{definition}[Übergangsmatrix]
+	Die Übergangsmatrix $P = (p_{ij})$ einer Markov-Kette ist eine stochastische Matrix mit:
+	\begin{align}
+		p_{ij} \geq 0 \quad \text{und} \quad \sum_{j=1}^{n} p_{ij} = 1 \quad \text{für alle } i
+	\end{align}
+\end{definition}
+
+Die Bedingung $\sum_{j=1}^{n} p_{ij} = 1$ für alle $i$ ist notwendig, denn von jedem Zustand aus muss das System in irgendeinen Zustand übergehen, möglicherweise auch in denselben Zustand bleiben. Damit ist der Versuch für jeden Zustand mathematisch vollständig beschrieben.
+
+Die Gedächtnislosigkeit vereinfacht die Analyse von Markov-Ketten erheblich. Anstatt die gesamte Historie des Systems zu berücksichtigen, genügt es, nur den aktuellen Zustand zu kennen. Dies ist eine massive Reduktion der Komplexität. Wenn mehrere Schritte betrachtet werden, kann die Wahrscheinlichkeit für Übergänge über mehrere Zeitschritte durch wiederholte Anwendung der Produktregel berechnet werden. Die Wahrscheinlichkeit, dass das System nach zwei Schritten von Zustand $s_i$ nach Zustand $s_k$ übergeht, berechnet sich durch Summation über alle möglichen Zwischenzustände:
+\begin{align}
+	P(X_{t+2} = s_k \mid X_t = s_i) = \sum_{j=1}^{n} P(X_{t+2} = s_k \mid X_{t+1} = s_j) \cdot P(X_{t+1} = s_j \mid X_t = s_i).
+\end{align}
+Dies bedeutet, dass über alle möglichen Zwischenzustände $s_j$ summiert wird. Für jeden Zwischenzustand wird die Wahrscheinlichkeit berechnet, von $s_i$ nach $s_j$ zu gelangen und von dort nach $s_k$. Die Summe aller dieser Pfade ergibt die Gesamtwahrscheinlichkeit für den Übergang von $s_i$ nach $s_k$ in zwei Schritten. Mit der Übergangsmatrix $P$ lässt sich dies kompakt schreiben als
+\begin{align}
+	P(X_{t+2} = s_k \mid X_t = s_i) = (P^2)_{ik},
+\end{align}
+wobei $P^2$ das Matrixprodukt $P \cdot P$ ist. Allgemein gilt für $n$ Schritte
+\begin{align}
+	P(X_{t+n} = s_k \mid X_t = s_i) = (P^n)_{ik}.
+\end{align}
+Die Wahrscheinlichkeit für Übergänge über mehrere Schritte ergibt sich damit direkt aus der Potenzierung der Übergangsmatrix. Dies ist eine elegante Konsequenz der Gedächtnis\-losigkeit.
+
+\begin{beispiel}
+Ein verteiltes Softwaresystem zur Verwaltung von Kundendaten besteht aus mehreren Komponenten, die unterschiedliche Funktionen bereitstellen. Das System kann sich in verschiedenen Zuständen befinden, die die Anzahl der aktiven Komponenten beschreiben. Die Zustände sind: $s_1$ (alle 12 Komponenten aktiv), $s_2$ (11 Komponenten aktiv), $s_3$ (10 Komponenten aktiv), $s_4$ (9 Komponenten aktiv), $s_5$ (8 Komponenten aktiv), $s_6$ (7 Komponenten aktiv), $s_7$ (6 Komponenten aktiv), $s_8$ (5 Komponenten aktiv), $s_9$ (4 Komponenten aktiv), $s_{10}$ (3 Komponenten aktiv), $s_{11}$ (2 Komponenten aktiv - degradiert), $s_{12}$ (1 Komponente aktiv - kritisch). Im Zustand $s_1$ arbeitet das System mit voller Leistung. Die Zustände $s_2$ bis $s_{10}$ beschreiben schrittweise Reduktionen der verfügbaren Komponenten, wobei das System weiterhin stabil arbeitet. Der Zustand $s_{11}$ ist degradiert, denn mit nur noch zwei aktiven Komponenten ist die Leistung stark eingeschränkt. Der Zustand $s_{12}$ ist kritisch, denn mit nur einer aktiven Komponente kann das System jederzeit komplett ausfallen. Abbildung \ref{fig:sw-markov} zeigt die Zustände und ausgewählte Übergänge des Systems als Graph. Der degradierte Zustand $s_{11}$ ist orange und der kritische Zustand $s_{12}$ ist rot markiert.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{markov-chain.pdf}
+	\caption{Markov-Kette für das Softwaresystem mit Übergangswahrscheinlichkeiten}
+	\label{fig:sw-markov}
+\end{figure}
+
+Die Beobachtung des Systems über längere Zeit ergibt folgende Übergangswahrschein\-lichkeiten. Das System kann in jedem Zustand entweder stabil bleiben, sich durch Ausfall einer Komponente verschlechtern oder sich durch Wiederherstellung einer Komponente verbessern. Die konkreten Wahrscheinlichkeiten hängen vom aktuellen Zustand ab. Für die Zustände mit vielen aktiven Komponenten ($s_1$ bis $s_5$) ist die Wahrscheinlichkeit hoch, dass das System stabil bleibt. Die Wahrscheinlichkeit für den Ausfall einer Komponente ist gering. Für die Zustände mit weniger aktiven Komponenten ($s_6$ bis $s_{10}$) steigt die Wahrscheinlichkeit für weitere Ausfälle, denn die Last auf den verbleibenden Komponenten ist höher. Im degradierten Zustand $s_{11}$ ist die Wahrscheinlichkeit für einen weiteren Ausfall sehr hoch. Im kritischen Zustand $s_{12}$ arbeitet das System mit maximaler Belastung der letzten Komponente.
+
+Die Übergangsmatrix für dieses System ist eine $12 \times 12$ Matrix. Für die Analyse sind folgende ausgewählte Übergangswahrscheinlichkeiten von Bedeutung:
+\begin{itemize}
+	\item[-] Von $s_1$ (alle 12 Komponenten): Verbleiben in $s_1$ mit $p_{1,1} = 0{,}92$, Übergang zu $s_2$ mit $p_{1,2} = 0{,}08$
+	\item[-] Von $s_2$ (11 Komponenten): Verbleiben in $s_2$ mit $p_{2,2} = 0{,}85$, Rückkehr zu $s_1$ mit $p_{2,1} = 0{,}10$, Übergang zu $s_3$ mit $p_{2,3} = 0{,}05$
+	\item[-] Von $s_3$ (10 Komponenten): Verbleiben in $s_3$ mit $p_{3,3} = 0{,}80$, Rückkehr zu $s_2$ mit $p_{3,2} = 0{,}12$, Übergang zu $s_4$ mit $p_{3,4} = 0{,}08$
+	\item[-] Von $s_6$ (7 Komponenten): Verbleiben in $s_6$ mit $p_{6,6} = 0{,}70$, Rückkehr zu $s_5$ mit $p_{6,5} = 0{,}15$, Übergang zu $s_7$ mit $p_{6,7} = 0{,}15$
+	\item[-] Von $s_{10}$ (3 Komponenten): Verbleiben in $s_{10}$ mit $p_{10,10} = 0{,}50$, Rückkehr zu $s_9$ mit $p_{10,9} = 0{,}20$, Übergang zu $s_{11}$ (degradiert) mit $p_{10,11} = 0{,}30$
+	\item[-] Von $s_{11}$ (2 Komponenten, degradiert): Verbleiben in $s_{11}$ mit $p_{11,11} = 0{,}40$, Rückkehr zu $s_{10}$ mit $p_{11,10} = 0{,}25$, Übergang zu $s_{12}$ (kritisch) mit $p_{11,12} = 0{,}35$
+	\item[-] Von $s_{12}$ (1 Komponente, kritisch): Verbleiben in $s_{12}$ mit $p_{12,12} = 0{,}30$, Rückkehr zu $s_{11}$ mit $p_{12,11} = 0{,}50$, Rückkehr zu $s_{10}$ mit $p_{12,10} = 0{,}20$
+\end{itemize}
+
+Die vollständige Übergangsmatrix $P$ ist eine $12 \times 12$ Matrix, bei der jede Zeile die Übergangswahrscheinlichkeiten von einem Zustand zu allen möglichen Zielzuständen beschreibt. Die Matrix ist dünn besetzt, denn von jedem Zustand aus sind nur Übergänge zu benachbarten Zuständen oder zum gleichen Zustand möglich. Ein direkter Übergang von $s_1$ zu $s_{12}$ ist nicht vorgesehen, denn dies würde bedeuten, dass 11 Komponenten gleichzeitig ausfallen, was extrem unwahrscheinlich ist.
+
+Die Gedächtnislosigkeit bedeutet hier, dass die Wahrscheinlichkeit für den nächsten Zustand nur von der aktuellen Anzahl aktiver Komponenten abhängt. Wenn das System in Zustand $s_6$ ist, also 7 Komponenten aktiv hat, beträgt die Wahrscheinlichkeit für den Übergang zu $s_7$ genau $p_{6,7} = 0{,}15$, unabhängig davon, ob das System von $s_5$ oder von $s_1$ zu $s_6$ gelangt ist. Dies ist eine Vereinfachung der Realität, denn in der Praxis könnte die Ausfallwahrscheinlichkeit davon abhängen, wie schnell die Komponenten ausgefallen sind oder wie lange das System bereits in einem reduzierten Zustand arbeitet. Die Annahme der Gedächtnislosigkeit muss also für den konkreten Versuch überprüft werden.
+
+Für die Planung der Systemwartung ist von Interesse, wie hoch die Wahrscheinlichkeit ist, dass das System nach einer bestimmten Zeit den kritischen Zustand $s_{12}$ erreicht. Wenn das System heute in Zustand $s_6$ ist, wie hoch ist die Wahrscheinlichkeit, dass es in fünf Tagen im kritischen Zustand $s_{12}$ ist? Diese Wahrscheinlichkeit ergibt sich durch Berechnung von $(P^5)_{6,12}$. Die Berechnung von $P^5$ erfolgt durch wiederholte Matrixmultiplikation. Das Ergebnis zeigt, dass $(P^5)_{6,12} \approx 0{,}028$, also etwa $2{,}8\%$. Dies bedeutet, dass bei 7 aktiven Komponenten die Wahrscheinlichkeit, innerhalb von fünf Tagen in den kritischen Zustand zu gelangen, bei knapp $3\%$ liegt. Diese Information ist wichtig für die Entscheidung, wann Wartungsmaßnahmen eingeleitet werden sollten.
+
+Besonders interessant ist die Betrachtung der Wahrscheinlichkeiten ausgehend vom degradierten Zustand $s_{11}$. Die Wahrscheinlichkeit, dass das System nach zwei Tagen im kritischen Zustand $s_{12}$ ist, wenn es heute degradiert ist, beträgt $(P^2)_{11,12} \approx 0{,}47$, also etwa $47\%$. Dies zeigt, dass der degradierte Zustand hochkritisch ist. Wenn das System einmal in diesen Zustand gelangt, ist die Wahrscheinlichkeit sehr hoch, dass es innerhalb kurzer Zeit in den kritischen Zustand übergeht. Die Wahrscheinlichkeit, aus dem degradierten Zustand innerhalb von zwei Tagen wieder zu Zustand $s_{10}$ oder besser zurückzukehren, beträgt nur etwa $38\%$. Dies unterstreicht die Notwendigkeit, präventive Maßnahmen zu ergreifen, bevor das System in den degradierten Zustand gelangt.
+
+Für die langfristige Planung ist die Frage von Bedeutung, wie sich das System verhält, wenn es über viele Tage betrieben wird. Die stationäre Verteilung $\pi = (\pi_1, \pi_2, \ldots, \pi_{12})$ beschreibt die langfristige Wahrscheinlichkeit, dass das System sich in einem bestimmten Zustand befindet, unabhängig vom Startzustand. Sie erfüllt die Gleichung $\pi^T = \pi^T P$ und $\sum_{i=1}^{12} \pi_i = 1$.
+
+Für die gegebene Übergangsmatrix ergibt sich durch numerische Lösung dieses Gleichungssystems die stationäre Verteilung
+\begin{align}
+	\pi \approx (0{,}35, 0{,}25, 0{,}18, 0{,}10, 0{,}05, 0{,}03, 0{,}02, 0{,}01, 0{,}005, 0{,}003, 0{,}002, 0{,}001).
+\end{align}
+Das bedeutet, auf lange Sicht ist das System mit Wahrscheinlichkeit $35\%$ im optimalen Zustand $s_1$ mit allen 12 Komponenten aktiv. Die Wahrscheinlichkeit nimmt mit abnehmender Komponentenanzahl ab. Der degradierte Zustand $s_{11}$ tritt mit Wahrscheinlichkeit $0{,}2\%$ auf und der kritische Zustand $s_{12}$ mit Wahrscheinlichkeit $0{,}1\%$. Diese Kennzahlen sind wichtig für die Bewertung der Systemverfügbarkeit.
+
+Die stationäre Verteilung zeigt, dass das System die meiste Zeit in den Zuständen $s_1$ bis $s_4$ verbringt, also mit 9 bis 12 aktiven Komponenten. Die Wahrscheinlichkeit, dass das System sich in einem Zustand mit 8 oder weniger Komponenten befindet, beträgt insgesamt etwa $12\%$. Dies bedeutet, dass das System im Durchschnitt etwa $44$ Tage im Jahr mit reduzierter Kapazität arbeitet. Die Wahrscheinlichkeit für den degradierten oder kritischen Zustand ist mit $0{,}3\%$ sehr gering, was etwa $1$ Tag im Jahr entspricht. Für kritische Systeme kann aber auch dies nicht akzeptabel sein.
+
+Durch Verbesserung der Übergangswahrscheinlichkeiten kann die langfristige Verfüg\-barkeit erhöht werden. Wenn zum Beispiel durch bessere Wartung und Monitoring die Wahrscheinlichkeit für Komponentenausfälle in den Zuständen $s_1$ bis $s_5$ jeweils um $20\%$ reduziert wird und gleichzeitig die Wahrscheinlichkeit für Wiederherstellungen um $30\%$ erhöht wird, verschiebt sich die stationäre Verteilung deutlich in Richtung der besseren Zustände. Die Wahrscheinlichkeit für den optimalen Zustand $s_1$ steigt dann von $35\%$ auf etwa $48\%$, während die Wahrscheinlichkeit für den degradierten und kritischen Zustand auf unter $0{,}1\%$ sinkt. Diese Analyse zeigt, wie die Markov-Kette zur Bewertung von Systemverbesserungen eingesetzt werden kann.
+
+Ein weiterer interessanter Aspekt ist die Analyse der mittleren Zeit bis zum Erreichen des kritischen Zustands $s_{12}$, ausgehend von verschiedenen Startzuständen. Wenn das System in Zustand $s_1$ startet, beträgt die erwartete Zeit bis zum ersten Erreichen von $s_{12}$ etwa $180$ Tage. Startet das System in Zustand $s_6$, reduziert sich diese Zeit auf etwa $35$ Tage. Aus dem degradierten Zustand $s_{11}$ beträgt die erwartete Zeit nur noch etwa $3$ Tage. Diese Kennzahlen sind wichtig für die Planung von Wartungsintervallen und für die Bewertung der Dringlichkeit von Reparaturmaßnahmen in verschiedenen Systemzuständen.
+\end{beispiel}
+
+Markov-Ketten sind ein wichtiges Werkzeug zur Modellierung von Versuchen, bei denen Zustände zeitlich aufeinander folgen. Der zentrale Aspekt ist die Gedächtnislosigkeit, also die Unabhängigkeit des zukünftigen Zustands von der Vergangenheit gegeben den aktuellen Zustand. Diese bedingte Unabhängigkeit vereinfacht die Analyse erheblich, denn es ist nicht notwendig, die gesamte Vorgeschichte des Systems zu berücksichtigen. Die Notation $P(X_{t+1} = s_j \mid X_t = s_i)$ wird verwendet, um den aktuellen Zustand als Voraussetzung anzugeben, aber die entscheidende Eigenschaft ist die Unabhängigkeit von allen früheren Zuständen.
+
+Die Anwendung von Markov-Ketten auf die Analyse der Verfügbarkeit von Softwaresystemen zeigt, wie die Gedächtnislosigkeit in der Praxis eingesetzt werden kann. Die stationäre Verteilung liefert eine wichtige Kennzahl für die langfristige Systemverfügbarkeit. Es ist aber wichtig zu beachten, dass die Übergangswahrscheinlichkeiten aus Beobachtungen geschätzt werden müssen. Wenn die tatsächlichen Übergangswahrscheinlichkeiten von den geschätzten abweichen, können die Ergebnisse der Analyse falsch sein. Darüber hinaus muss die Annahme der Gedächtnislosigkeit gerechtfertigt sein. Wenn die Wahrscheinlichkeit für einen Ausfall tatsächlich davon abhängt, wie lange das System bereits im degradierten Zustand ist, ist das Modell der Markov-Kette nicht anwendbar. In solchen Fällen müssen erweiterte Modelle verwendet werden, die die Vorgeschichte explizit berücksichtigen.
 
 \section{3-KNF Algorithmus}
 
