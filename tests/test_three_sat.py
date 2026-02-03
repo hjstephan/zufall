@@ -1,7 +1,7 @@
 """Tests für die 3-SAT Kernimplementierung."""
 
 import pytest
-from three_sat import (
+from src.three_sat import (
     Literal, Clause, ThreeCNFFormula, Assignment,
     RandomizedThreeSAT, brute_force_max_sat
 )

@@ -1,7 +1,7 @@
 """Tests für das Experiment-Framework."""
 
 import pytest
-from experiments import ExperimentRunner, ExperimentResult
+from src.experiments import ExperimentRunner, ExperimentResult
 
 
 class TestExperimentRunner:

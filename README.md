@@ -31,26 +31,6 @@ Die bekannten Wahrscheinlichkeitsverteilungen der Mathematik sind für die unter
 
 # 3-KNF Algorithmus mit Zufall
 
-## Projektstruktur
-
-```
-zufall/
-├── doc/                      # Generierte Dokumentation
-├── science/                  # Wissenschaftliche Arbeit
-├── src/
-│   ├── __init__.py
-│   ├── three_sat.py          # 3-SAT
-│   └── experiments.py        # Experimente
-├── tests/                    # Tests
-│   ├── __init__.py
-│   ├── test_three_sat.py     # 3-SAT Tests
-│   └── test_experiments.py   # Tests für Experimente
-├── pytest.ini                # Testbeschreibung für Python
-├── requirements.txt
-├── run_experiments.py        # Experimente ausführen
-└── README.md
-```
-
 ## Installation
 
 ```bash
@@ -85,7 +65,7 @@ xdg-open doc/htmlcov/index.html  # Linux
 ### Experimente ausführen
 
 ```bash
-python run_experiments.py
+python -m src.run_experiments
 ```
 
 ## Erwartete Ausgabe

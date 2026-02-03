@@ -1,7 +1,7 @@
 """Hauptprogramm für experimentelle Analyse mit Plotting."""
 
 import matplotlib.pyplot as plt
-from experiments import ExperimentRunner, print_results_table
+from .experiments import ExperimentRunner, print_results_table
 
 def plot_results(results_vars):
     """Erstellt eine SVG-Grafik der Ergebnisse."""
