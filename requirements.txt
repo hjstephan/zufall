@@ -16,4 +16,4 @@ pytest-cov
 python-dateutil
 six
 tabulate
--e git+ssh://git@github.com/hjstephan/zufall.git
+-e git+ssh://git@github.com/hjstephan/zufall.git@main#egg
