@@ -4,8 +4,7 @@ import statistics
 from typing import List
 from dataclasses import dataclass
 
-from .three_sat import ThreeCNFFormula, RandomizedThreeSAT, brute_force_max_sat
-
+from pysci.zufall.three_sat import ThreeCNFFormula, RandomizedThreeSAT, brute_force_max_sat
 
 @dataclass
 class ExperimentResult:

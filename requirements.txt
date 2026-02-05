@@ -1,19 +1,2 @@
-contourpy
-coverage
-cycler
-fonttools
-iniconfig
-kiwisolver
-matplotlib
-numpy
-packaging
-pillow
-pluggy
-Pygments
-pyparsing
-pytest
-pytest-cov
-python-dateutil
-six
+-e git+ssh://git@gitlab.com/epp-group/pysci.git@v2.0.1#egg=pysci
 tabulate
--e git+ssh://git@github.com/hjstephan/zufall.git
